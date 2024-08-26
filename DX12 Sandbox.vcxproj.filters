@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Support">
+      <UniqueIdentifier>{4f384fa5-a0c6-45af-90c9-daea75dfd2af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{344acdae-a7fc-4815-a5c2-f54a79a69d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D">
+      <UniqueIdentifier>{e9f3bad6-ad14-461b-a07b-75b84b0b89a5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DXDebugLayer.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="DXContext.cpp">
+      <Filter>D3D</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Window.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WinInclude.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="ComPointer.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="DXDebugLayer.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="DXContext.h">
+      <Filter>D3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
