@@ -195,7 +195,7 @@ void DXWindow::SetFullscreen(bool enabled) {
     m_isFullscreen = enabled;
 }
 
-void DXWindow::BeginFrame(ID3D12GraphicsCommandList7* cmdList)
+void DXWindow::BeginFrame(ID3D12GraphicsCommandList6* cmdList)
 {
     m_currBufferIndex = m_swapChain->GetCurrentBackBufferIndex();
     D3D12_RESOURCE_BARRIER barr;
@@ -214,7 +214,7 @@ void DXWindow::BeginFrame(ID3D12GraphicsCommandList7* cmdList)
     cmdList->OMSetRenderTargets(1, &m_rtvHandles[m_currBufferIndex], false, nullptr);
 }
 
-void DXWindow::EndFrame(ID3D12GraphicsCommandList7* cmdList)
+void DXWindow::EndFrame(ID3D12GraphicsCommandList6* cmdList)
 {
     D3D12_RESOURCE_BARRIER barr;
 

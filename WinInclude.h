@@ -8,6 +8,6 @@
 #include<dxgi1_6.h>
 
 #ifdef _DEBUG
-#include<d3d12sdklayers.h>
-#include<dxgidebug.h>
+	#include<d3d12sdklayers.h>
+	#include<dxgidebug.h>
 #endif

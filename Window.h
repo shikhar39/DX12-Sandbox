@@ -13,8 +13,8 @@ public:
 	void Resize();
 	void SetFullscreen(bool enabled);
 
-	void BeginFrame(ID3D12GraphicsCommandList7* cmdList);
-	void EndFrame(ID3D12GraphicsCommandList7* cmdList);
+	void BeginFrame(ID3D12GraphicsCommandList6* cmdList);
+	void EndFrame(ID3D12GraphicsCommandList6* cmdList);
 
 	inline bool ShouldClose() const {
 		return m_shouldClose;

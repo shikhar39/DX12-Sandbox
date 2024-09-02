@@ -43,7 +43,7 @@ bool DXContext::Init()
         return false;
     }
 
-    // ############### Command List ############### 
+    // ############### Command List ###############
     if (FAILED(m_device->CreateCommandList1(0, D3D12_COMMAND_LIST_TYPE_DIRECT, D3D12_COMMAND_LIST_FLAG_NONE, IID_PPV_ARGS(&m_cmdList)))) {
         return false;
     }
@@ -78,7 +78,7 @@ void DXContext::SignalAndWait()
 
 }
 
-ID3D12GraphicsCommandList7* DXContext::InitCommandList()
+ID3D12GraphicsCommandList6* DXContext::InitCommandList()
 {
     m_cmdAllocator->Reset();
     m_cmdList->Reset(m_cmdAllocator, nullptr);
