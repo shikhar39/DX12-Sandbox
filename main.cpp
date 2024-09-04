@@ -12,7 +12,6 @@ void main() {
 
 	if (DXContext::Get().Init() && DXWindow::Get().Init()) {
 		
-		const char* hello = "Hello World";
 
 		D3D12_HEAP_PROPERTIES hpUpload{};
 		hpUpload.Type = D3D12_HEAP_TYPE_UPLOAD;
@@ -27,6 +26,21 @@ void main() {
 		hpDefault.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
 		hpDefault.CreationNodeMask = 0;
 		hpDefault.VisibleNodeMask = 0;
+
+		// Vertex Data
+		struct Vertex {
+			float x, y;
+		};
+		Vertex vertices[] = {
+			// Triangle 1
+			{-1.f, -1.f},
+			{ 0.f, 1.f},
+			{1.f, -1.f}
+		};
+		D3D12_INPUT_ELEMENT_DESC vertexLayout[] = {
+			{	"Position",	0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
+		};
+
 
 		D3D12_RESOURCE_DESC rd{};
 		rd.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -53,14 +67,27 @@ void main() {
 		uploadRange.End = 1023;
 
 		uploadBuffer->Map(0, &uploadRange, &uploadBufferAddress);
-		memcpy(uploadBufferAddress, hello, strlen(hello) + 1);
+		memcpy(uploadBufferAddress, vertices, sizeof(vertices));
 		uploadBuffer->Unmap(0, &uploadRange);
 
 		// Copy CPU -> GPU 
 		auto* cmdList = DXContext::Get().InitCommandList();
-		cmdList->CopyBufferRegion(vertexBuffer, 0, uploadBuffer, 0, strlen(hello) + 1);
+		cmdList->CopyBufferRegion(vertexBuffer, 0, uploadBuffer, 0, 1024);
 		DXContext::Get().ExecuteCommandList();
 
+		D3D12_GRAPHICS_PIPELINE_STATE_DESC gfxPsod{};
+		gfxPsod.InputLayout.NumElements = _countof(vertexLayout) ;
+		gfxPsod.InputLayout.pInputElementDescs = vertexLayout;
+		gfxPsod.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
+
+
+		D3D12_VERTEX_BUFFER_VIEW vbv{};
+		vbv.BufferLocation = vertexBuffer->GetGPUVirtualAddress();
+		vbv.SizeInBytes = sizeof(Vertex) * _countof(vertices);
+		vbv.StrideInBytes = sizeof(Vertex); 
+
+
+		// DXContext::Get().GetDevice()->CreatePipelineState();
 
 		DXWindow::Get().SetFullscreen(true);
 		while (!DXWindow::Get().ShouldClose()) {
@@ -77,9 +104,15 @@ void main() {
 			// Begin drawing
 			cmdList = DXContext::Get().InitCommandList();
 
-			// Setup
-			// Draw 
+			// Draw to window
 			DXWindow::Get().BeginFrame(cmdList);
+			
+			// --- Input Assembler ---
+			cmdList->IASetVertexBuffers(0, 1, &vbv);
+			cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+			// Draw 
+			cmdList->DrawInstanced(_countof(vertices), 1, 0, 0);
 
 			DXWindow::Get().EndFrame(cmdList);
 
@@ -90,6 +123,11 @@ void main() {
 
 		//Need to flush the frame here, because once we exit the game loop(while loop above), Gpu/ Command queue has reference to the swap chain becuase it is still doing something, but if we release swapchain then it causes problems.
 		DXContext::Get().Flush(DXWindow::GetFrameCount());
+
+		//
+		vertexBuffer.Release();
+		uploadBuffer.Release(); 
+
 
 		DXWindow::Get().Shutdown();
 		DXContext::Get().Shutdown();
