@@ -1,11 +1,11 @@
 #include <iostream>
-#include "WinInclude.h"
-#include "ComPointer.h"
-#include "Window.h"
+#include "Support/WinInclude.h"
+#include "Support/ComPointer.h"
+#include "Support/Window.h"
+#include "Support/Shader.h"
+#include "Debug/DXDebugLayer.h"
 
-#include "DXDebugLayer.h"
-
-#include "DXContext.h"
+#include "D3D/DXContext.h"
 
 void main() {
 	DXDebugLayer::Get().Init();
@@ -41,7 +41,7 @@ void main() {
 			{	"Position",	0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
 		};
 
-
+		// ==== Upload & Vertex Buffer ====
 		D3D12_RESOURCE_DESC rd{};
 		rd.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 		rd.Alignment = D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT;
@@ -75,12 +75,23 @@ void main() {
 		cmdList->CopyBufferRegion(vertexBuffer, 0, uploadBuffer, 0, 1024);
 		DXContext::Get().ExecuteCommandList();
 
+		// ==== Shader ====
+		Shader vertexShader("VertexShader.cso");
+		Shader pixelShader("PixelShader.cso");
+
+		// ==== Pipeline State ====
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC gfxPsod{};
 		gfxPsod.InputLayout.NumElements = _countof(vertexLayout) ;
 		gfxPsod.InputLayout.pInputElementDescs = vertexLayout;
 		gfxPsod.IBStripCutValue = D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;
+		gfxPsod.VS.BytecodeLength = vertexShader.GetSize();
+		gfxPsod.VS.pShaderBytecode = vertexShader.GetBuffer();
+		// TODO Rasterizer
+		gfxPsod.PS.BytecodeLength = pixelShader.GetSize();
+		gfxPsod.PS.pShaderBytecode = pixelShader.GetBuffer();
+		// TODO Output Merger 
 
-
+		// ==== Vertex Buffer View====
 		D3D12_VERTEX_BUFFER_VIEW vbv{};
 		vbv.BufferLocation = vertexBuffer->GetGPUVirtualAddress();
 		vbv.SizeInBytes = sizeof(Vertex) * _countof(vertices);

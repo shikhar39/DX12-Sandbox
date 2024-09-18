@@ -14,34 +14,51 @@
     <Filter Include="D3D">
       <UniqueIdentifier>{e9f3bad6-ad14-461b-a07b-75b84b0b89a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{b4c5e8d0-f62b-4b09-8a2f-3aec6ee4065d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DXDebugLayer.cpp">
-      <Filter>Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="DXContext.cpp">
-      <Filter>D3D</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Window.cpp">
+    <ClCompile Include="Support\Window.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="D3D\DXContext.cpp">
+      <Filter>D3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug\DXDebugLayer.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Support\Shader.cpp">
       <Filter>Support</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WinInclude.h">
+    <ClInclude Include="Support\ComPointer.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="ComPointer.h">
+    <ClInclude Include="Support\Window.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="DXDebugLayer.h">
-      <Filter>Debug</Filter>
+    <ClInclude Include="Support\WinInclude.h">
+      <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="DXContext.h">
+    <ClInclude Include="D3D\DXContext.h">
       <Filter>D3D</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
+    <ClInclude Include="Debug\DXDebugLayer.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Support\Shader.h">
       <Filter>Support</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\VertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

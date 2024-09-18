@@ -1,7 +1,7 @@
 #pragma once
 #include "WinInclude.h"
 #include "ComPointer.h"
-#include "DXContext.h"
+#include "D3D/DXContext.h"
 
 class DXWindow
 {
