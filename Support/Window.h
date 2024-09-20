@@ -28,6 +28,10 @@ public:
 		return m_isFullscreen;
 	}
 
+	inline UINT GetWidth() const { return m_width; }
+	inline UINT GetHeight() const { return m_height; }
+
+	
 	static constexpr size_t FrameCount = 2;
 	static constexpr size_t GetFrameCount() {
 		return FrameCount; 
