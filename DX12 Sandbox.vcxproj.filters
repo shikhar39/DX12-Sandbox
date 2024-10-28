@@ -32,6 +32,9 @@
     <ClCompile Include="Support\Shader.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="Support\ImageLoader.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Support\ComPointer.h">
@@ -50,6 +53,9 @@
       <Filter>Debug</Filter>
     </ClInclude>
     <ClInclude Include="Support\Shader.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Support\ImageLoader.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,9 +1,19 @@
 #include "RootSignature.hlsl"
 
 float3 color : register(b0);
+Texture2D<float4> textures[] : register(t0);
+sampler textureSampler : register(s0);
+
 
 [RootSignature(ROOTSIG)]
-float4 main() : SV_Target
+void main(
+    // == IN == 
+    in float2 uv : Texcoord,
+
+    // == OUT ==
+    out float4 pixel : SV_Target 
+)
 {
-    return float4(color , 1.0f);
+    float4 texel = textures[0].Sample(textureSampler, uv);
+    pixel = float4(texel.rgb, 1.0f);
 }
